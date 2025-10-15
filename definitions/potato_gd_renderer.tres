@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ORC_Renderer_Def" load_steps=7 format=3 uid="uid://w6vg3a55sel3"]
+
+[ext_resource type="Script" uid="uid://c2gdlsdhya8qt" path="res://orc-renderers-impl/orc-potato-gd-impl/scripts/potato_gd_renderer.gd" id="1_e1wp7"]
+[ext_resource type="Script" uid="uid://bugchofvgrin8" path="res://addons/open-render-craft/scripts/definitions/renderer_def.gd" id="1_q8rv4"]
+[ext_resource type="Script" uid="uid://dc1h8f6w8okcw" path="res://addons/open-render-craft/scripts/definitions/gd_impl_def.gd" id="2_5eebq"]
+[ext_resource type="Script" uid="uid://l3252k5l80sl" path="res://orc-renderers-impl/orc-potato-gd-impl/scripts/potato_gd_scene_proxy.gd" id="3_pi17i"]
+
+[sub_resource type="Resource" id="Resource_6f81a"]
+script = ExtResource("2_5eebq")
+gd_script = ExtResource("1_e1wp7")
+metadata/_custom_type_script = "uid://dc1h8f6w8okcw"
+
+[sub_resource type="Resource" id="Resource_jgp21"]
+script = ExtResource("2_5eebq")
+gd_script = ExtResource("3_pi17i")
+metadata/_custom_type_script = "uid://dc1h8f6w8okcw"
+
+[resource]
+script = ExtResource("1_q8rv4")
+renderer_impl = SubResource("Resource_6f81a")
+scene_proxy_impl = SubResource("Resource_jgp21")
+metadata/_custom_type_script = "uid://bugchofvgrin8"
