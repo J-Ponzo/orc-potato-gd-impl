@@ -1,12 +1,11 @@
 extends ORC_RendererBase
 class_name ORC_PotatoGDRenderer
 
-func setup_override() -> void:
-	super_setup()
-	print("ORC_PotatoGDRenderer.setup")
-
 var current_cam_data : ORC_PotatoGD_CameraData
 var surfaces_data : Array[ORC_PotatoGD_SurfaceData]
+
+func setup_override() -> void:
+	pass
 
 func pre_render_override() -> void:
 	super_pre_render()
@@ -26,7 +25,6 @@ func render_override() -> void:
 
 func get_render_target_override() -> RID:
 	return attachments["Albedo"];
-	
+
 func cleanup_override() -> void:
-	super_cleanup()
-	print("ORC_PotatoGDRenderer.cleanup")
+	pass

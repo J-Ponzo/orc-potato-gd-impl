@@ -1,11 +1,10 @@
-[gd_resource type="Resource" script_class="ORC_Renderer_Def" load_steps=14 format=3 uid="uid://w6vg3a55sel3"]
+[gd_resource type="Resource" script_class="ORC_Renderer_Def" load_steps=12 format=3 uid="uid://w6vg3a55sel3"]
 
 [ext_resource type="Script" uid="uid://c2gdlsdhya8qt" path="res://orc-renderers-impl/orc-potato-gd-impl/scripts/potato_gd_renderer.gd" id="1_e1wp7"]
 [ext_resource type="Script" uid="uid://b0c0mwr6sl3i8" path="res://addons/open-render-craft/scripts/definitions/attachment_format_def.gd" id="1_pi17i"]
 [ext_resource type="Script" uid="uid://bugchofvgrin8" path="res://addons/open-render-craft/scripts/definitions/renderer_def.gd" id="1_q8rv4"]
 [ext_resource type="Script" uid="uid://dc1h8f6w8okcw" path="res://addons/open-render-craft/scripts/definitions/gd_impl_def.gd" id="2_5eebq"]
 [ext_resource type="Script" uid="uid://d1octrgyict0t" path="res://orc-renderers-impl/orc-potato-gd-impl/scripts/potato_gd_proxy_factory.gd" id="2_6f81a"]
-[ext_resource type="Script" uid="uid://l3252k5l80sl" path="res://orc-renderers-impl/orc-potato-gd-impl/scripts/potato_gd_scene_proxy.gd" id="3_pi17i"]
 [ext_resource type="Script" uid="uid://bi1q4yltghow7" path="res://addons/open-render-craft/scripts/definitions/render_pass_def.gd" id="4_6f81a"]
 [ext_resource type="Resource" uid="uid://c5s8a3iitd7id" path="res://orc-renderers-impl/orc-potato-gd-impl/definitions/potato_gd_single_pass.tres" id="6_jgp21"]
 
@@ -31,15 +30,9 @@ script = ExtResource("2_5eebq")
 gd_script = ExtResource("1_e1wp7")
 metadata/_custom_type_script = "uid://dc1h8f6w8okcw"
 
-[sub_resource type="Resource" id="Resource_jgp21"]
-script = ExtResource("2_5eebq")
-gd_script = ExtResource("3_pi17i")
-metadata/_custom_type_script = "uid://dc1h8f6w8okcw"
-
 [resource]
 script = ExtResource("1_q8rv4")
 renderer_impl = SubResource("Resource_6f81a")
-scene_proxy_impl = SubResource("Resource_jgp21")
 proxy_factory_impl = SubResource("Resource_qmd5f")
 renderer_pass_defs = Dictionary[StringName, ExtResource("4_6f81a")]({
 &"Single": ExtResource("6_jgp21")

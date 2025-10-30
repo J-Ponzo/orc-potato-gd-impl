@@ -35,7 +35,12 @@ func render_override() -> void:
 		ORC.rd.draw_list_set_push_constant(draw_list, surface_data.mesh_data.model_matrix_bytes, surface_data.mesh_data.model_matrix_bytes.size())
 		ORC.rd.draw_list_draw(draw_list, true, 1)
 
+		ORC.rd.free_rid(albedo_uniform_set)
+
 	ORC.rd.draw_list_end()
+
+	ORC.rd.free_rid(matrices_uniform_set)
+
 
 	
 func cleanup_override() -> void:
