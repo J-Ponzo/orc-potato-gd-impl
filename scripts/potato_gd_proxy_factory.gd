@@ -41,11 +41,14 @@ func create_mesh_data_from(mesh_node : MeshInstance3D, cache : ORC_ProxyCache) -
 
 func create_surface_data_from(mesh : Mesh, mesh_data : ORC_PotatoGD_MeshData, surface_index : int, cache : ORC_ProxyCache) -> ORC_PotatoGD_SurfaceData:
 	var surface_data : ORC_PotatoGD_SurfaceData = create_and_register_secondary(ORC_PotatoGD_SurfaceData, cache, mesh_data)
-	
+	surface_data.mesh_data = mesh_data
 	surface_data.topology_data = create_topology_data_from(mesh, mesh_data, surface_index, cache)
-	
 	var material : BaseMaterial3D = mesh.surface_get_material(surface_index)
 	surface_data.material_data = create_material_data_from(material, mesh_data, cache)
+
+	var vf_def : ORC_VertexFormatDef = ORC_VertexFormatDef.new() 
+	var vf = ORC_RendererFactory.create_vertex_format(vf_def)
+	surface_data.vertex_array = ORC.rd.vertex_array_create(surface_data.topology_data.vertex_count, vf, [surface_data.topology_data.position_buffer])
 
 	return surface_data
 

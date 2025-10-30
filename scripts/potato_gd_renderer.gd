@@ -25,7 +25,7 @@ func render_override() -> void:
 	(render_passes["Single"] as ORC_PotatoGDSinglePass).render()
 
 func get_render_target_override() -> RID:
-	return super_get_render_target();
+	return attachments["Albedo"];
 	
 func cleanup_override() -> void:
 	super_cleanup()
