@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ORC_RenderPassDef" load_steps=9 format=3 uid="uid://c5s8a3iitd7id"]
 
 [ext_resource type="Script" uid="uid://u2ik3nomvswi" path="res://addons/open-render-craft/scripts/definitions/explicite_pso_def.gd" id="1_3mxt5"]
-[ext_resource type="Resource" uid="uid://bwibx8kdsf5bg" path="res://orc-renderers-impl/orc-potato-gd-impl/definitions/potato_pso.tres" id="2_7caw6"]
+[ext_resource type="Resource" uid="uid://bwibx8kdsf5bg" path="res://orc-renderers-impl/orc-potato-gd-impl/definitions/potato_gd_pso.tres" id="2_7caw6"]
 [ext_resource type="Script" uid="uid://bi1q4yltghow7" path="res://addons/open-render-craft/scripts/definitions/render_pass_def.gd" id="2_qnxey"]
 [ext_resource type="Script" uid="uid://xkekl1qfnapr" path="res://addons/open-render-craft/scripts/definitions/framebuffer_format_def.gd" id="2_xpuof"]
 [ext_resource type="Script" uid="uid://clicm1tedjqd0" path="res://orc-renderers-impl/orc-potato-gd-impl/scripts/potato_gd_single_pass.gd" id="3_7caw6"]
