@@ -26,7 +26,7 @@ func create_camera_data_from(cam_node : Camera3D, cache : ORC_ProxyCache) -> ORC
 	var bytes = cam_data.view_matrix_bytes
 	bytes.append_array(cam_data.projection_matrix_bytes)
 
-	cam_data.matrices_uniform_buffer = ORC.rd.uniform_buffer_create(bytes.size(), bytes)
+	cam_data.matrices_uniform_buffer = ORC_RDHelper.get_rd().uniform_buffer_create(bytes.size(), bytes)
 	return cam_data
 	
 func create_mesh_data_from(mesh_node : MeshInstance3D, cache : ORC_ProxyCache) -> ORC_PotatoGD_MeshData:
@@ -47,9 +47,8 @@ func create_surface_data_from(mesh : Mesh, mesh_data : ORC_PotatoGD_MeshData, su
 	surface_data.material_data = create_material_data_from(material, mesh_data, cache)
 
 	var vf_def : ORC_VertexFormatDef = ORC_VertexFormatDef.new() 
-	# var vf = ORC_RendererFactory.create_vertex_format(vf_def)
-	var vf = ORC_RDHelper.create_vertex_format(vf_def)
-	surface_data.vertex_array = ORC.rd.vertex_array_create(surface_data.topology_data.vertex_count, vf, [surface_data.topology_data.position_buffer])
+	var vf = ORC_RendererFactory.create_vertex_format(vf_def)
+	surface_data.vertex_array = ORC_RDHelper.get_rd().vertex_array_create(surface_data.topology_data.vertex_count, vf, [surface_data.topology_data.position_buffer])
 
 	return surface_data
 
@@ -61,12 +60,12 @@ func create_topology_data_from(mesh : Mesh, mesh_data : ORC_PotatoGD_MeshData, s
 	var arrays = mesh.surface_get_arrays(surface_index)
 	topology_data.index_count = arrays[Mesh.ARRAY_INDEX].size()
 	var byte_array = arrays[Mesh.ARRAY_INDEX].to_byte_array()
-	topology_data.index_buffer = ORC.rd.index_buffer_create(arrays[Mesh.ARRAY_INDEX].size(), RenderingDevice.INDEX_BUFFER_FORMAT_UINT32, byte_array)
-	topology_data.index_array = ORC.rd.index_array_create(topology_data.index_buffer, 0, topology_data.index_count)
+	topology_data.index_buffer = ORC_RDHelper.get_rd().index_buffer_create(arrays[Mesh.ARRAY_INDEX].size(), RenderingDevice.INDEX_BUFFER_FORMAT_UINT32, byte_array)
+	topology_data.index_array = ORC_RDHelper.get_rd().index_array_create(topology_data.index_buffer, 0, topology_data.index_count)
 
 	topology_data.vertex_count = arrays[Mesh.ARRAY_VERTEX].size()
 	byte_array = arrays[Mesh.ARRAY_VERTEX].to_byte_array()
-	topology_data.position_buffer = ORC.rd.vertex_buffer_create(byte_array.size(), byte_array)
+	topology_data.position_buffer = ORC_RDHelper.get_rd().vertex_buffer_create(byte_array.size(), byte_array)
 
 	return topology_data
 
@@ -77,7 +76,7 @@ func create_material_data_from(material : BaseMaterial3D, mesh_data : ORC_Potato
 
 	var albedo_floats_array : PackedFloat32Array = [material.albedo_color.r, material.albedo_color.g, material.albedo_color.b, material.albedo_color.a]
 	var bytes : PackedByteArray =  albedo_floats_array.to_byte_array()
-	material_data.albedo_buffer = ORC.rd.uniform_buffer_create(bytes.size(), bytes)
+	material_data.albedo_buffer = ORC_RDHelper.get_rd().uniform_buffer_create(bytes.size(), bytes)
 
 	return material_data
 
@@ -99,7 +98,7 @@ func free_data_override(data : ORC_ProxyData, cache : ORC_ProxyCache) -> bool:
 	
 func free_camera_data(cam_data : ORC_PotatoGD_CameraData, cache : ORC_ProxyCache) -> bool:
 	if cam_data.matrices_uniform_buffer != RID():
-		ORC.rd.free_rid(cam_data.matrices_uniform_buffer)
+		ORC_RDHelper.get_rd().free_rid(cam_data.matrices_uniform_buffer)
 		cam_data.matrices_uniform_buffer = RID()
 
 	return destroy_and_unregister_data(cam_data, cache)
@@ -112,20 +111,20 @@ func free_surface_data(surface_data : ORC_PotatoGD_SurfaceData, cache : ORC_Prox
 	
 func free_topology_data(topology_data : ORC_PotatoGD_TopologyData, cache : ORC_ProxyCache) -> bool:
 	if topology_data.index_array != RID():
-		ORC.rd.free_rid(topology_data.index_array)
+		ORC_RDHelper.get_rd().free_rid(topology_data.index_array)
 		topology_data.index_array = RID()
 	if topology_data.index_buffer != RID():
-		ORC.rd.free_rid(topology_data.index_buffer)
+		ORC_RDHelper.get_rd().free_rid(topology_data.index_buffer)
 		topology_data.index_buffer = RID()
 	if topology_data.position_buffer != RID():
-		ORC.rd.free_rid(topology_data.position_buffer)
+		ORC_RDHelper.get_rd().free_rid(topology_data.position_buffer)
 		topology_data.position_buffer = RID()
 	
 	return destroy_and_unregister_data(topology_data, cache, topology_data.unique_id)
 	
 func free_material_data(material_data : ORC_PotatoGD_MaterialData, cache : ORC_ProxyCache) -> bool:
 	if material_data.albedo_buffer != RID():
-		ORC.rd.free_rid(material_data.albedo_buffer)
+		ORC_RDHelper.get_rd().free_rid(material_data.albedo_buffer)
 		material_data.albedo_buffer = RID()
 	return destroy_and_unregister_data(material_data, cache)
 
