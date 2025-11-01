@@ -47,7 +47,8 @@ func create_surface_data_from(mesh : Mesh, mesh_data : ORC_PotatoGD_MeshData, su
 	surface_data.material_data = create_material_data_from(material, mesh_data, cache)
 
 	var vf_def : ORC_VertexFormatDef = ORC_VertexFormatDef.new() 
-	var vf = ORC_RendererFactory.create_vertex_format(vf_def)
+	# var vf = ORC_RendererFactory.create_vertex_format(vf_def)
+	var vf = ORC_RDHelper.create_vertex_format(vf_def)
 	surface_data.vertex_array = ORC.rd.vertex_array_create(surface_data.topology_data.vertex_count, vf, [surface_data.topology_data.position_buffer])
 
 	return surface_data
