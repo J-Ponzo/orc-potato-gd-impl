@@ -21,7 +21,7 @@ func pre_render_override() -> void:
 		surfaces_data.append(surface_data)
 	
 func render_override() -> void:
-	(render_passes["Single"] as ORC_PotatoGDSinglePass).render()
+	(render_passes["Single"] as ORC_RenderPassBase).render()
 
 func get_render_target_override() -> RID:
 	return attachments["Albedo"];
