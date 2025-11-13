@@ -9,7 +9,7 @@ func create_proxy_from_override(node : Node) -> ORC_ProxyObject:
 		proxy_object = ORC_PotatoGD_MeshProxy.new()
 	return proxy_object
 	
-func create_data_from_override(node : Node, cache : ORC_ProxyCache) -> ORC_PrimaryData:
+func create_data_from_override(node : Node, cache : ORC_ProxyRegistry) -> ORC_PrimaryData:
 	var primary_data : ORC_PrimaryData = null
 	if node is Camera3D:
 		primary_data = create_camera_data_from(node, cache)
@@ -17,7 +17,7 @@ func create_data_from_override(node : Node, cache : ORC_ProxyCache) -> ORC_Prima
 		primary_data = create_mesh_data_from(node, cache)	
 	return primary_data;
 
-func create_camera_data_from(cam_node : Camera3D, cache : ORC_ProxyCache) -> ORC_PotatoGD_CameraData:
+func create_camera_data_from(cam_node : Camera3D, cache : ORC_ProxyRegistry) -> ORC_PotatoGD_CameraData:
 	var cam_data : ORC_PotatoGD_CameraData = create_and_register_primary(ORC_PotatoGD_CameraData, cache)
 	cam_data.view_transform = cam_node.get_camera_transform().affine_inverse()
 	cam_data.view_matrix_bytes = proj_to_bytes(Projection(cam_data.view_transform))
@@ -29,7 +29,7 @@ func create_camera_data_from(cam_node : Camera3D, cache : ORC_ProxyCache) -> ORC
 	cam_data.matrices_uniform_buffer = ORC_RDHelper.get_rd().uniform_buffer_create(bytes.size(), bytes)
 	return cam_data
 	
-func create_mesh_data_from(mesh_node : MeshInstance3D, cache : ORC_ProxyCache) -> ORC_PotatoGD_MeshData:
+func create_mesh_data_from(mesh_node : MeshInstance3D, cache : ORC_ProxyRegistry) -> ORC_PotatoGD_MeshData:
 	var mesh_data : ORC_PotatoGD_MeshData = create_and_register_primary(ORC_PotatoGD_MeshData, cache)
 	mesh_data.model_matrix_bytes = proj_to_bytes(Projection(mesh_node.global_transform))
 
@@ -39,7 +39,7 @@ func create_mesh_data_from(mesh_node : MeshInstance3D, cache : ORC_ProxyCache) -
 
 	return mesh_data
 
-func create_surface_data_from(mesh : Mesh, mesh_data : ORC_PotatoGD_MeshData, surface_index : int, cache : ORC_ProxyCache) -> ORC_PotatoGD_SurfaceData:
+func create_surface_data_from(mesh : Mesh, mesh_data : ORC_PotatoGD_MeshData, surface_index : int, cache : ORC_ProxyRegistry) -> ORC_PotatoGD_SurfaceData:
 	var surface_data : ORC_PotatoGD_SurfaceData = create_and_register_secondary(ORC_PotatoGD_SurfaceData, cache, mesh_data)
 	surface_data.mesh_data = mesh_data
 	surface_data.topology_data = create_topology_data_from(mesh, mesh_data, surface_index, cache)
@@ -52,7 +52,7 @@ func create_surface_data_from(mesh : Mesh, mesh_data : ORC_PotatoGD_MeshData, su
 
 	return surface_data
 
-func create_topology_data_from(mesh : Mesh, mesh_data : ORC_PotatoGD_MeshData, surface_index : int, cache : ORC_ProxyCache) -> ORC_PotatoGD_TopologyData:
+func create_topology_data_from(mesh : Mesh, mesh_data : ORC_PotatoGD_MeshData, surface_index : int, cache : ORC_ProxyRegistry) -> ORC_PotatoGD_TopologyData:
 	var unique_id : int = mesh.get_instance_id()
 	var topology_data : ORC_PotatoGD_TopologyData = create_and_register_secondary(ORC_PotatoGD_TopologyData, cache, mesh_data, unique_id)
 	topology_data.unique_id = unique_id
@@ -69,7 +69,7 @@ func create_topology_data_from(mesh : Mesh, mesh_data : ORC_PotatoGD_MeshData, s
 
 	return topology_data
 
-func create_material_data_from(material : BaseMaterial3D, mesh_data : ORC_PotatoGD_MeshData, cache : ORC_ProxyCache) -> ORC_PotatoGD_MaterialData:
+func create_material_data_from(material : BaseMaterial3D, mesh_data : ORC_PotatoGD_MeshData, cache : ORC_ProxyRegistry) -> ORC_PotatoGD_MaterialData:
 	var unique_id : int = material.get_instance_id()
 	var material_data : ORC_PotatoGD_MaterialData = create_and_register_secondary(ORC_PotatoGD_MaterialData, cache, mesh_data, unique_id)
 	material_data.unique_id = unique_id
@@ -83,7 +83,7 @@ func create_material_data_from(material : BaseMaterial3D, mesh_data : ORC_Potato
 func free_proxy_override(proxy_object : ORC_ProxyObject) -> bool:
 		return true
 		
-func free_data_override(data : ORC_ProxyData, cache : ORC_ProxyCache) -> bool:
+func free_data_override(data : ORC_ProxyData, cache : ORC_ProxyRegistry) -> bool:
 	if data is ORC_PotatoGD_CameraData:
 		return free_camera_data(data, cache)
 	elif data is ORC_PotatoGD_MeshData:
@@ -96,20 +96,20 @@ func free_data_override(data : ORC_ProxyData, cache : ORC_ProxyCache) -> bool:
 		return free_material_data(data, cache)
 	return false
 	
-func free_camera_data(cam_data : ORC_PotatoGD_CameraData, cache : ORC_ProxyCache) -> bool:
+func free_camera_data(cam_data : ORC_PotatoGD_CameraData, cache : ORC_ProxyRegistry) -> bool:
 	if cam_data.matrices_uniform_buffer != RID():
 		ORC_RDHelper.get_rd().free_rid(cam_data.matrices_uniform_buffer)
 		cam_data.matrices_uniform_buffer = RID()
 
 	return destroy_and_unregister_data(cam_data, cache)
 	
-func free_mesh_data(mesh_data : ORC_PotatoGD_MeshData, cache : ORC_ProxyCache) -> bool:
+func free_mesh_data(mesh_data : ORC_PotatoGD_MeshData, cache : ORC_ProxyRegistry) -> bool:
 	return destroy_and_unregister_data(mesh_data, cache)
 	
-func free_surface_data(surface_data : ORC_PotatoGD_SurfaceData, cache : ORC_ProxyCache) -> bool:
+func free_surface_data(surface_data : ORC_PotatoGD_SurfaceData, cache : ORC_ProxyRegistry) -> bool:
 	return destroy_and_unregister_data(surface_data, cache)
 	
-func free_topology_data(topology_data : ORC_PotatoGD_TopologyData, cache : ORC_ProxyCache) -> bool:
+func free_topology_data(topology_data : ORC_PotatoGD_TopologyData, cache : ORC_ProxyRegistry) -> bool:
 	if topology_data.index_array != RID():
 		ORC_RDHelper.get_rd().free_rid(topology_data.index_array)
 		topology_data.index_array = RID()
@@ -122,7 +122,7 @@ func free_topology_data(topology_data : ORC_PotatoGD_TopologyData, cache : ORC_P
 	
 	return destroy_and_unregister_data(topology_data, cache, topology_data.unique_id)
 	
-func free_material_data(material_data : ORC_PotatoGD_MaterialData, cache : ORC_ProxyCache) -> bool:
+func free_material_data(material_data : ORC_PotatoGD_MaterialData, cache : ORC_ProxyRegistry) -> bool:
 	if material_data.albedo_buffer != RID():
 		ORC_RDHelper.get_rd().free_rid(material_data.albedo_buffer)
 		material_data.albedo_buffer = RID()
@@ -147,3 +147,4 @@ static func proj_to_bytes(proj : Projection) -> PackedByteArray:
 		offset += 4
 	
 	return byte_array
+
