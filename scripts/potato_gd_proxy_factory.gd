@@ -147,5 +147,3 @@ static func proj_to_bytes(proj : Projection) -> PackedByteArray:
 		offset += 4
 	
 	return byte_array
-
-
