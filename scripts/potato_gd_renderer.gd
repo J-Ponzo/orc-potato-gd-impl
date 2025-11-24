@@ -9,13 +9,15 @@ func setup_override() -> void:
 
 func pre_render_override() -> void:
 	super_pre_render()
-	var cameras_data : Array = scene_proxy.get_by_type(ORC_PotatoGD_CameraData)
+	var cameras_data : Array = scene_proxy.get_queue_data("cameras")
+	# var cameras_data : Array = scene_proxy.get_by_type(ORC_PotatoGD_CameraData)
 	for camera_data : ORC_PotatoGD_CameraData in cameras_data:
 		if camera_data.proxy_object.node.current:
 			current_cam_data = camera_data
 			break
 	
-	var non_casted_surfaces_data : Array = scene_proxy.get_by_type(ORC_PotatoGD_SurfaceData)
+	var non_casted_surfaces_data : Array = scene_proxy.get_queue_data("surfaces")
+	# var non_casted_surfaces_data : Array = scene_proxy.get_by_type(ORC_PotatoGD_SurfaceData)
 	surfaces_data.clear()
 	for surface_data : ORC_PotatoGD_SurfaceData in non_casted_surfaces_data:
 		surfaces_data.append(surface_data)
