@@ -6,6 +6,9 @@ func setup_override() -> void:
 	print("ORC_PotatoGDSinglePass.setup()")
 	
 func render_override() -> void:
+	if renderer.current_cam_data == null:
+		return
+
 	var matrices_uniform : RDUniform = RDUniform.new()
 	matrices_uniform.uniform_type = RenderingDevice.UNIFORM_TYPE_UNIFORM_BUFFER
 	matrices_uniform.binding = 0
