@@ -21,10 +21,10 @@ func pre_render_override() -> void:
 		surfaces_data.append(surface_data)
 	
 func render_override() -> void:
-	(render_passes["Single"] as ORC_RenderPassBase).render()
+	get_render_pass("Single").render()
 
 func get_render_target_override() -> RID:
-	return attachments["Albedo"];
+	return get_attachment("Albedo")
 
 func cleanup_override() -> void:
 	pass

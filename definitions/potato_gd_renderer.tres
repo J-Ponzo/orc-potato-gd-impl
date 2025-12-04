@@ -15,12 +15,14 @@
 
 [sub_resource type="Resource" id="Resource_gx8ab"]
 script = ExtResource("1_pi17i")
+attachment_name = &"Albedo"
 format = 96
 usage_flags = Array[int]([2, 1])
 metadata/_custom_type_script = "uid://b0c0mwr6sl3i8"
 
 [sub_resource type="Resource" id="Resource_5fylr"]
 script = ExtResource("1_pi17i")
+attachment_name = &"Depth"
 format = 125
 usage_flags = Array[int]([4])
 metadata/_custom_type_script = "uid://b0c0mwr6sl3i8"
@@ -71,12 +73,7 @@ metadata/_custom_type_script = "uid://dc1h8f6w8okcw"
 script = ExtResource("1_q8rv4")
 renderer_impl = SubResource("Resource_6f81a")
 proxy_factory_impl = SubResource("Resource_qmd5f")
-renderer_pass_defs = Dictionary[StringName, ExtResource("4_6f81a")]({
-&"Single": ExtResource("6_jgp21")
-})
-attachment_format_defs = Dictionary[StringName, ExtResource("1_pi17i")]({
-&"Albedo": SubResource("Resource_gx8ab"),
-&"Depth": SubResource("Resource_5fylr")
-})
+renderer_pass_defs = Array[ExtResource("4_6f81a")]([ExtResource("6_jgp21")])
+attachment_format_defs = Array[ExtResource("1_pi17i")]([SubResource("Resource_gx8ab"), SubResource("Resource_5fylr")])
 proxy_queue_defs = Array[ExtResource("4_jgp21")]([SubResource("Resource_i6nvr"), SubResource("Resource_vwg5r")])
 metadata/_custom_type_script = "uid://bugchofvgrin8"

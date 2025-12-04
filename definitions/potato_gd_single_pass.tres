@@ -20,6 +20,7 @@ metadata/_custom_type_script = "uid://dc1h8f6w8okcw"
 
 [resource]
 script = ExtResource("2_qnxey")
+pass_name = &"Single"
 pass_impl = SubResource("Resource_q0ckk")
 fb_format_def = SubResource("Resource_pqjsw")
 explicite_pso_defs = Dictionary[StringName, ExtResource("1_3mxt5")]({
