@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="ORC_RenderPassDef" load_steps=10 format=3 uid="uid://c5s8a3iitd7id"]
 
-[ext_resource type="Script" uid="uid://dcqwi20npj7jh" path="res://addons/open-render-craft/scripts/definitions/direct_pso_def.gd" id="1_7caw6"]
+[ext_resource type="Script" uid="uid://cgf0wrkdwkdto" path="res://addons/open-render-craft/scripts/definitions/pso_def.gd" id="1_7caw6"]
 [ext_resource type="Resource" uid="uid://bwibx8kdsf5bg" path="res://orc-renderers-impl/orc-potato-gd-impl/definitions/potato_gd_pso.tres" id="2_7caw6"]
 [ext_resource type="Script" uid="uid://bi1q4yltghow7" path="res://addons/open-render-craft/scripts/definitions/render_pass_def.gd" id="2_qnxey"]
 [ext_resource type="Script" uid="uid://xkekl1qfnapr" path="res://addons/open-render-craft/scripts/definitions/framebuffer_format_def.gd" id="2_xpuof"]
 [ext_resource type="Script" uid="uid://clicm1tedjqd0" path="res://orc-renderers-impl/orc-potato-gd-impl/scripts/potato_gd_single_pass.gd" id="3_7caw6"]
 [ext_resource type="Script" uid="uid://dc1h8f6w8okcw" path="res://addons/open-render-craft/scripts/definitions/gd_impl_def.gd" id="4_k31f7"]
-[ext_resource type="Script" uid="uid://do2obga4y4ynm" path="res://addons/open-render-craft/scripts/definitions/uber_pso_def.gd" id="6_k31f7"]
+[ext_resource type="Script" uid="uid://byv4yjobnmtgf" path="res://addons/open-render-craft/scripts/definitions/pso_factory_def.gd" id="6_k31f7"]
 
 [sub_resource type="Resource" id="Resource_pqjsw"]
 script = ExtResource("2_xpuof")
