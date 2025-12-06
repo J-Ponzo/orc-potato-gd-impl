@@ -20,8 +20,8 @@ func create_data_from_override(node : Node, registry : ORC_ProxyRegistry) -> ORC
 func create_camera_data_from(cam_node : Camera3D, registry : ORC_ProxyRegistry) -> ORC_PotatoGD_CameraData:
 	var cam_data : ORC_PotatoGD_CameraData = create_and_register_primary(ORC_PotatoGD_CameraData, registry)
 	cam_data.view_transform = cam_node.get_camera_transform().affine_inverse()
-	cam_data.view_matrix_bytes = proj_to_bytes(Projection(cam_data.view_transform))
-	cam_data.projection_matrix_bytes = proj_to_bytes(cam_node.get_camera_projection().flipped_y())
+	cam_data.view_matrix_bytes = ORC_RDHelper.proj_to_bytes(Projection(cam_data.view_transform))
+	cam_data.projection_matrix_bytes = ORC_RDHelper.proj_to_bytes(cam_node.get_camera_projection().flipped_y())
 
 	var bytes = cam_data.view_matrix_bytes
 	bytes.append_array(cam_data.projection_matrix_bytes)
@@ -31,7 +31,7 @@ func create_camera_data_from(cam_node : Camera3D, registry : ORC_ProxyRegistry) 
 	
 func create_mesh_data_from(mesh_node : MeshInstance3D, registry : ORC_ProxyRegistry) -> ORC_PotatoGD_MeshData:
 	var mesh_data : ORC_PotatoGD_MeshData = create_and_register_primary(ORC_PotatoGD_MeshData, registry)
-	mesh_data.model_matrix_bytes = proj_to_bytes(Projection(mesh_node.global_transform))
+	mesh_data.model_matrix_bytes = ORC_RDHelper.proj_to_bytes(Projection(mesh_node.global_transform))
 
 	for i in range(0, mesh_node.mesh.get_surface_count()):
 		var surface_data : ORC_PotatoGD_SurfaceData = create_surface_data_from(mesh_node.mesh, mesh_data, i, registry)
@@ -127,23 +127,3 @@ func free_material_data(material_data : ORC_PotatoGD_MaterialData, registry : OR
 		ORC_RDHelper.get_rd().free_rid(material_data.albedo_buffer)
 		material_data.albedo_buffer = RID()
 	return destroy_and_unregister_data(material_data, registry)
-
-const SIZEOF_MAT4 = 64 
-
-static func proj_to_bytes(proj : Projection) -> PackedByteArray:
-	var byte_array : PackedByteArray = PackedByteArray()
-	byte_array.resize(SIZEOF_MAT4)
-	
-	var offset = 0
-	for i in range(4):
-		var column = proj[i]
-		byte_array.encode_float(offset, column.x)
-		offset += 4
-		byte_array.encode_float(offset, column.y)
-		offset += 4
-		byte_array.encode_float(offset, column.z)
-		offset += 4
-		byte_array.encode_float(offset, column.w)
-		offset += 4
-	
-	return byte_array
