@@ -74,6 +74,7 @@ func create_material_data_from(material : BaseMaterial3D, mesh_data : ORC_Potato
 	var material_data : ORC_PotatoGD_MaterialData = create_and_register_secondary(ORC_PotatoGD_MaterialData, registry, mesh_data, unique_id)
 	material_data.unique_id = unique_id
 
+	# TODO Have to check if already exists ?
 	var albedo_floats_array : PackedFloat32Array = [material.albedo_color.r, material.albedo_color.g, material.albedo_color.b, material.albedo_color.a]
 	var bytes : PackedByteArray =  albedo_floats_array.to_byte_array()
 	material_data.albedo_buffer = ORC_RDHelper.get_rd().uniform_buffer_create(bytes.size(), bytes)
