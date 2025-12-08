@@ -55,6 +55,8 @@ func create_surface_data_from(mesh : Mesh, mesh_data : ORC_PotatoGD_MeshData, su
 func create_topology_data_from(mesh : Mesh, mesh_data : ORC_PotatoGD_MeshData, surface_index : int, registry : ORC_ProxyRegistry) -> ORC_PotatoGD_TopologyData:
 	var unique_id : int = mesh.get_instance_id()
 	var topology_data : ORC_PotatoGD_TopologyData = create_and_register_secondary(ORC_PotatoGD_TopologyData, registry, mesh_data, unique_id)
+	if topology_data.is_shared():
+		return topology_data
 	topology_data.unique_id = unique_id
 
 	var arrays = mesh.surface_get_arrays(surface_index)
@@ -72,9 +74,10 @@ func create_topology_data_from(mesh : Mesh, mesh_data : ORC_PotatoGD_MeshData, s
 func create_material_data_from(material : BaseMaterial3D, mesh_data : ORC_PotatoGD_MeshData, registry : ORC_ProxyRegistry) -> ORC_PotatoGD_MaterialData:
 	var unique_id : int = material.get_instance_id()
 	var material_data : ORC_PotatoGD_MaterialData = create_and_register_secondary(ORC_PotatoGD_MaterialData, registry, mesh_data, unique_id)
+	if material_data.is_shared():
+		return material_data
 	material_data.unique_id = unique_id
 
-	# TODO Have to check if already exists ?
 	var albedo_floats_array : PackedFloat32Array = [material.albedo_color.r, material.albedo_color.g, material.albedo_color.b, material.albedo_color.a]
 	var bytes : PackedByteArray =  albedo_floats_array.to_byte_array()
 	material_data.albedo_buffer = ORC_RDHelper.get_rd().uniform_buffer_create(bytes.size(), bytes)
