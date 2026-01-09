@@ -53,7 +53,7 @@ func create_surface_data_from(mesh : Mesh, mesh_data : ORC_PotatoGD_MeshData, su
 	return surface_data
 
 func create_topology_data_from(mesh : Mesh, mesh_data : ORC_PotatoGD_MeshData, surface_index : int, registry : ORC_ProxyRegistry) -> ORC_PotatoGD_TopologyData:
-	var unique_id : int = mesh.get_instance_id()
+	var unique_id : int = hash(str(mesh.get_instance_id()) + str(surface_index))
 	var topology_data : ORC_PotatoGD_TopologyData = create_and_register_secondary(ORC_PotatoGD_TopologyData, registry, mesh_data, unique_id)
 	if topology_data.is_shared():
 		return topology_data
