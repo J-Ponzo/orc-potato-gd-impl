@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ORC_RenderPassDef" load_steps=10 format=3 uid="uid://c5s8a3iitd7id"]
+[gd_resource type="Resource" script_class="ORC_RenderPassDef" load_steps=13 format=3 uid="uid://c5s8a3iitd7id"]
 
 [ext_resource type="Script" uid="uid://cgf0wrkdwkdto" path="res://addons/open-render-craft/scripts/definitions/pso_def.gd" id="1_7caw6"]
 [ext_resource type="Resource" uid="uid://bwibx8kdsf5bg" path="res://orc-renderers-impl/orc-potato-gd-impl/definitions/potato_gd_pso.tres" id="2_7caw6"]
@@ -6,12 +6,22 @@
 [ext_resource type="Script" uid="uid://xkekl1qfnapr" path="res://addons/open-render-craft/scripts/definitions/framebuffer_format_def.gd" id="2_xpuof"]
 [ext_resource type="Script" uid="uid://clicm1tedjqd0" path="res://orc-renderers-impl/orc-potato-gd-impl/scripts/potato_gd_single_pass.gd" id="3_7caw6"]
 [ext_resource type="Script" uid="uid://dc1h8f6w8okcw" path="res://addons/open-render-craft/scripts/definitions/gd_impl_def.gd" id="4_k31f7"]
+[ext_resource type="Script" uid="uid://cwn75m20wuvc1" path="res://addons/open-render-craft/scripts/definitions/attachment_ref_def.gd" id="4_pqjsw"]
 [ext_resource type="Script" uid="uid://byv4yjobnmtgf" path="res://addons/open-render-craft/scripts/definitions/pso_factory_def.gd" id="6_k31f7"]
+
+[sub_resource type="Resource" id="Resource_22u1m"]
+script = ExtResource("4_pqjsw")
+attachment_name = &"Depth"
+metadata/_custom_type_script = "uid://cwn75m20wuvc1"
+
+[sub_resource type="Resource" id="Resource_3r15n"]
+script = ExtResource("4_pqjsw")
+attachment_name = &"Albedo"
+metadata/_custom_type_script = "uid://cwn75m20wuvc1"
 
 [sub_resource type="Resource" id="Resource_k31f7"]
 script = ExtResource("2_xpuof")
-depth_key = &"Depth"
-color_keys = Array[StringName]([&"Albedo"])
+attachment_refs = Array[ExtResource("4_pqjsw")]([SubResource("Resource_22u1m"), SubResource("Resource_3r15n")])
 metadata/_custom_type_script = "uid://xkekl1qfnapr"
 
 [sub_resource type="Resource" id="Resource_q0ckk"]
